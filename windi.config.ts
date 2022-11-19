@@ -2,6 +2,7 @@ import { defineConfig } from 'windicss/helpers'
 import colors from 'windicss/colors'
 
 export default defineConfig({
+  preflight: false,
   theme: {
     shortcuts: {
       "header-1": "font-header font-extrabold text-3xl sm:(text-5xl)",
