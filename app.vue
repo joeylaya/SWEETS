@@ -24,8 +24,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', resizeListener))
 const route = useRoute()
 const layout = computed(() => {
   if (route.path == '/') return 'landing'
-  if (route.params.slug) return 'detail'
-  return 'topic'
+  return 'default'
 })
 
 </script>
