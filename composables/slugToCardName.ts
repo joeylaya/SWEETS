@@ -6,5 +6,5 @@ const slugToWidgetName = (slug: string) => {
     words[i] = word.charAt(0).toUpperCase + word.slice(1)
   }
 
-  return words.join("") + "Widget"
+  return words.join("") + "Card"
 }
