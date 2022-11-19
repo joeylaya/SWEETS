@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/content": "^2.2.2",
+    "@nuxtjs/supabase": "^0.2.5",
+    "nuxt": "3.0.0",
+    "nuxt-windicss": "^2.5.5",
+    "prisma": "^4.6.1",
+    "windicss": "^3.5.6"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.4",
+    "@prisma/client": "^4.6.1",
+    "pinia": "^2.0.24"
+  }
+}
