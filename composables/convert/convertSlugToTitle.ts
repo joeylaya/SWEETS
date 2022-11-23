@@ -1,4 +1,4 @@
-const slugToTitle = (slug: string) => {
+const convertSlugToTitle = (slug: string) => {
   let words = slug.split('-')
 
   for (let i = 0; i < words.length; i++) {
