@@ -1,4 +1,4 @@
-type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+import { ScreenSize } from "~~/types"
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
