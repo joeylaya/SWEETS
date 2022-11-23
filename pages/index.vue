@@ -25,6 +25,9 @@ const mode = computed(() => {
         <h2 class="header-2 font-primary">Software Engineer Energy & Time Saver</h2>
       </header>
       <div class="flex flex-wrap">
+        <div v-for="topic in topics">
+
+        </div>
         <!-- v-for Topic -->
       </div>
     </section>
