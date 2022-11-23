@@ -1,4 +1,4 @@
-const slugToWidgetName = (slug: string) => {
+const convertSlugToCardName = (slug: string) => {
   let words = slug.split("-")
 
   for (let i = 0; i < words.length; i++) {
