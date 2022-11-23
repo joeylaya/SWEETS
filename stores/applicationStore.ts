@@ -1,20 +1,54 @@
-import { FilterType, IApplication, IApplication_Algorithm, IApplication_DataStructure, IApplication_DataType, IFilters } from "~~/types";
+import {
+  Application,
+  Application_Algorithm,
+  Application_DataStructure,
+  Application_DataType,
+  ApplicationComposite,
+  Filters,
+  FilterType
+} from "~~/types"
 import { useAlgorithmStore } from "./algorithmStore";
-const algorithmStore = useAlgorithmStore()
-type ApplicationComposite = IApplication_Algorithm | IApplication_DataStructure | IApplication_DataType
 
 export const useApplicationStore = defineStore('application', {
   state: () => ({
-    applications: Array<Object>() as Array<IApplication>,
-    application_algorithms: Array<Object>() as Array<IApplication_Algorithm>,
-    application_dataStructures: Array<Object>() as Array<IApplication_DataStructure>,
-    application_dataTypes: Array<Object>() as Array<IApplication_DataType>,
-    applicationFilters: Object() as IFilters,
-    applicationsByFilters: Array<Array<Object>>() as Array<Array<IApplication>>,
-    filteredApplications: Array<Object>() as Array<IApplication>
+    applications: Array<Object>() as Array<Application>,
+    application_algorithms: Array<Object>() as Array<Application_Algorithm>,
+    application_dataStructures: Array<Object>() as Array<Application_DataStructure>,
+    application_dataTypes: Array<Object>() as Array<Application_DataType>,
+    applicationFilters: Object() as Filters,
+    applicationsByFilters: Array<Array<Object>>() as Array<Array<Application>>,
+    filteredApplications: Array<Object>() as Array<Application>
   }),
 
   actions: {
+    async getAllApplications() {
+      if (this.applications.length > 0) return this.applications
+      const { data } = await useFetch('/api/Application')
+      this.applications = data.value as Array<Application>
+      return this.applications
+    },
+
+    async getAllApplication_Algorithms() {
+      if (this.application_algorithms.length > 0) return this.application_algorithms
+      const { data } = await useFetch('/api/Application_Algorithm')
+      this.application_algorithms = data.value as Array<Application_Algorithm>
+      return this.application_algorithms
+    },
+
+    async getAllApplication_dataStructures() {
+      if (this.application_dataStructures.length > 0) return this.application_dataStructures
+      const { data } = await useFetch('/api/Application_DataStructure')
+      this.application_dataStructures = data.value as Array<Application_DataStructure>
+      return this.application_dataStructures
+    },
+
+    async getAllApplication_dataTypes() {
+      if (this.application_dataTypes.length > 0) return this.application_dataTypes
+      const { data } = await useFetch('/api/Application_DataType')
+      this.application_dataTypes = data.value as Array<Application_DataType>
+      return this.application_dataTypes
+    },
+
     toggleApplicationFilters(filterType: FilterType, id: number) {
       const index =
         this.applicationFilters[`${filterType}Ids`]
@@ -58,6 +92,7 @@ export const useApplicationStore = defineStore('application', {
     },
 
     getApplicationsByAlgorithmTypes(id?: number) {
+      const algorithmStore = useAlgorithmStore()
       if (id) this.toggleApplicationFilters("algorithm", id)
       const { algorithmTypeIds } = this.applicationFilters
       if (algorithmTypeIds.length == 0) return this.applications
