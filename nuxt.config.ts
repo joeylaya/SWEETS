@@ -2,7 +2,19 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-windicss',
     '@nuxtjs/supabase',
-    '@nuxt/content',
+    [
+      '@nuxt/content',
+      {
+        highlight: {
+          theme: {
+            default: 'material-lighter',
+            dark: 'one-dark-pro',
+            light: 'material-lighter'
+          },
+          preload: [ 'python' ]
+        }
+      }      
+    ],
     [
       '@pinia/nuxt',
       {
@@ -10,16 +22,6 @@ export default defineNuxtConfig({
       }
     ]
   ],
-  content: {
-    highlight: {
-      theme: {
-        default: 'material-lighter',
-        dark: 'one-dark-pro',
-        light: 'material-lighter'
-      },
-      preload: [ 'python' ]
-    }
-  },
   imports: {
     dirs: ['stores']
   },

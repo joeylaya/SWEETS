@@ -1,4 +1,4 @@
-const slugToWidgetName = (slug: string) => {
+const convertSlugToCardName = (slug: string) => {
   let words = slug.split("-")
 
   for (let i = 0; i < words.length; i++) {
@@ -6,5 +6,5 @@ const slugToWidgetName = (slug: string) => {
     words[i] = word.charAt(0).toUpperCase + word.slice(1)
   }
 
-  return words.join("") + "Widget"
+  return words.join("") + "Card"
 }

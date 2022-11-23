@@ -1,12 +1,20 @@
-type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+import { Topic, ScreenSize } from "~~/types"
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
+    topics: Array<Object>() as Array<Topic>,
     darkMode: Boolean(),
     screenSize: String() as ScreenSize
   }),
 
   actions: {
+    async getAllTopics() {
+      if (this.topics.length > 0) return this.topics
+      const { data } = await useFetch('/api/Topic')
+      this.topics = data.value as Array<Topic>
+      return this.topics
+    },
+
     toggleDarkMode() {
       this.darkMode = !this.darkMode
     },
