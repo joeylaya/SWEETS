@@ -37,7 +37,7 @@ export const useAlgorithmStore = defineStore('algorithm', {
       this.algorithmComplexities = data.value as Array<AlgorithmComplexity>
       return this.algorithmComplexities
     },
-
+    
     toggleAlgorithmFilters(filterType: FilterType, id: number) {
       const index =
         this.algorithmFilters[`${filterType}Ids`]
