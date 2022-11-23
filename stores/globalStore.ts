@@ -12,7 +12,8 @@ export const useGlobalStore = defineStore('global', {
       if (this.topics.length > 0) return this.topics
       const { data } = await useFetch('/api/Topic')
       this.topics = data.value as Array<Topic>
-      return this.topics
+      console.log(data.value)
+      return data.value
     },
 
     toggleDarkMode() {

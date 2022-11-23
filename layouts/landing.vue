@@ -15,7 +15,7 @@ const mode = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="min-w-screen min-h-screen flex flex-col">
     <!-- TheDarkModeButton -->
     <main>
       <slot />
