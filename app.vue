@@ -30,7 +30,7 @@ const layout = computed(() => {
 </script>
 
 <template>
-  <div class="w-full min-w-screen h-full min-h-screen font-body" :class="darkMode ? 'dark text-neutral-100 bg-neutral-900' : 'text-neutral-600 bg-neutral-50'">
+  <div class="-m-2 min-w-screen min-h-screen font-body" :class="darkMode ? 'dark text-neutral-100 bg-neutral-900' : 'text-neutral-600 bg-neutral-50'">
     <NuxtLayout :name="layout">
       <NuxtPage />
     </NuxtLayout>
