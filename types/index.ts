@@ -5,6 +5,7 @@ export type AlgorithmComplexity = Database["public"]["Tables"]["AlgorithmComplex
 export type AlgorithmType = Database["public"]["Tables"]["AlgorithmType"]["Row"]
 export type Application = Database["public"]["Tables"]["Application"]["Row"]
 export type Application_Algorithm = Database["public"]["Tables"]["Application_Algorithm"]["Row"]
+export type Application_AlgorithmType = Database["public"]["Tables"]["Application_AlgorithmType"]["Row"]
 export type Application_DataStructure = Database["public"]["Tables"]["Application_DataStructure"]["Row"]
 export type Application_DataType = Database["public"]["Tables"]["Application_DataType"]["Row"]
 export type DataStructure = Database["public"]["Tables"]["DataStructure"]["Row"]
@@ -14,21 +15,45 @@ export type Method = Database["public"]["Tables"]["Method"]["Row"]
 export type Term = Database["public"]["Tables"]["Term"]["Row"]
 export type Topic = Database["public"]["Tables"]["Topic"]["Row"]
 
-export type ApplicationComposite = Application_Algorithm | Application_DataStructure | Application_DataType
+export type Subtopic = "algorithm" | "algorithmType" | "application"
 
-export type Filters = {
-  algorithmIds: Array<number>
-  algorithmTypeIds: Array<number>
-  applicationIds: Array<number>
-  dataStructureIds: Array<number>
-  dataTypeIds: Array<number>
+export const Relations = {
+  "algorithm": Array<Record<string, number>>(),
+  "algorithmType": Array<Record<string, number>>(),
+  "application": Array<Record<string, number>>()
 }
 
-export type FilterType =
-  "algorithm" |
-  "algorithmType" |
-  "application" |
-  "dataStructure" |
-  "dataType"
+export const Filters = {
+  "algorithm": Array<number>(),
+  "algorithmType": Array<number>(),
+  "application": Array<number>()
+}
+
+export const FilterOptions = {
+  "algorithm": Array<Record<"id" | "name", number | string>>(),
+  "algorithmType": Array<Record<"id" | "name", number | string>>(),
+  "application": Array<Record<"id" | "name", number | string>>()  
+}
+// export type ApplicationComposite = Application_Algorithm | Application_DataStructure | Application_DataType
+
+// export type Filters = {
+//   algorithmIds: Array<number>
+//   algorithmTypeIds: Array<number>
+//   applicationIds: Array<number>
+//   dataStructureIds: Array<number>
+//   dataTypeIds: Array<number>
+// }
+
+// export type FilterType =
+//   "algorithm" |
+//   "algorithmType" |
+//   "application" |
+//   "dataStructure" |
+//   "dataType"
+
+// export type FilterOption = {
+//   type: FilterType,
+//   options: Array<Record<'id' | 'name', number | string>>
+// }
 
 export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'

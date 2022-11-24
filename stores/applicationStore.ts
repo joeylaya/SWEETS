@@ -1,151 +1,92 @@
 import {
   Application,
   Application_Algorithm,
-  Application_DataStructure,
-  Application_DataType,
-  ApplicationComposite,
+  Application_AlgorithmType,
+  Subtopic,
+  Relations,
   Filters,
-  FilterType
+  FilterOptions
 } from "~~/types"
-import { useAlgorithmStore } from "./algorithmStore";
+import { useAlgorithmStore } from "./algorithmStore"
 
 export const useApplicationStore = defineStore('application', {
   state: () => ({
     applications: Array<Object>() as Array<Application>,
-    application_algorithms: Array<Object>() as Array<Application_Algorithm>,
-    application_dataStructures: Array<Object>() as Array<Application_DataStructure>,
-    application_dataTypes: Array<Object>() as Array<Application_DataType>,
-    applicationFilters: Object() as Filters,
-    applicationsByFilters: Array<Array<Object>>() as Array<Array<Application>>,
-    filteredApplications: Array<Object>() as Array<Application>
+    applicationRelations: Relations,
+
+    applicationFilterOptions: FilterOptions,
+
+    expandedApplicationFilterType: String() as Subtopic,
+    activeApplicationFilters: Filters,
+    filteredApplications: Array<Object>() as Array<Application>,    
   }),
 
   actions: {
-    async getAllApplications() {
-      if (this.applications.length > 0) return this.applications
-      const { data } = await useFetch('/api/Application')
-      this.applications = data.value as Array<Application>
-      return this.applications
-    },
+    // // GET ALL
+    // async getAllApplications() {
+    //   const time = new Date().getUTCSeconds()
+    //   console.log('time', time)
+    //   const { data: applications } = await useFetch('api/Application', {key: `api/Application/${time}`})
+    //   this.applications = applications.value as Array<Application>
+    //   console.log(this.applications)
+    //   return this.applications
+    // },
 
-    async getAllApplication_Algorithms() {
-      if (this.application_algorithms.length > 0) return this.application_algorithms
-      const { data } = await useFetch('/api/Application_Algorithm')
-      this.application_algorithms = data.value as Array<Application_Algorithm>
-      return this.application_algorithms
-    },
+    // async getAllApplicationRelations() {
+    //   const application_algorithms = await $fetch('api/Application_Algorithm')
+    //   this.applicationRelations.algorithm = application_algorithms as Array<Application_Algorithm>      
+    //   const application_algorithmTypes = await $fetch('api/Application_AlgorithmType')
+    //   this.applicationRelations.algorithmType = application_algorithmTypes as Array<Application_AlgorithmType>
+    //   return this.applicationRelations
+    // },
 
-    async getAllApplication_dataStructures() {
-      if (this.application_dataStructures.length > 0) return this.application_dataStructures
-      const { data } = await useFetch('/api/Application_DataStructure')
-      this.application_dataStructures = data.value as Array<Application_DataStructure>
-      return this.application_dataStructures
-    },
+    // async getAllApplicationFilterOptions() {
 
-    async getAllApplication_dataTypes() {
-      if (this.application_dataTypes.length > 0) return this.application_dataTypes
-      const { data } = await useFetch('/api/Application_DataType')
-      this.application_dataTypes = data.value as Array<Application_DataType>
-      return this.application_dataTypes
-    },
+    // },
 
-    toggleApplicationFilters(filterType: FilterType, id: number) {
-      const index =
-        this.applicationFilters[`${filterType}Ids`]
-          .findIndex(e => e == id)
-
-      if (index >= 0) {
-        this.applicationFilters[`${filterType}Ids`]
-          .splice(index, 1)
+    // TOGGLE FILTERS
+    toggleApplicationFilterType(filterType: Subtopic) {
+      if (this.expandedApplicationFilterType == filterType) {
+        this.expandedApplicationFilterType = String() as Subtopic
       } else {
-        this.applicationFilters[`${filterType}Ids`]
-          .push(id)
+        this.expandedApplicationFilterType = filterType
       }
     },
 
-    getApplicationIdsbyFilter(
-      filterIds: Array<number>,
-      filterType: FilterType,
-      compositeIds: Array<ApplicationComposite>
-    ) {
-      let applicationIds = []
-      for (const el of compositeIds) {
-        if (filterIds.includes(el[`${filterType}Id`])) {
-          applicationIds.push(el.applicationId)
-        }
+    toggleApplicationFilters(filterType: Subtopic, id: number) {
+      const filterIds = this.activeApplicationFilters[filterType]
+      const index = filterIds.findIndex(e => e == id)
+      if (index >= 0) {
+        this.activeApplicationFilters[filterType].splice(index, 1)
+      } else {
+        this.activeApplicationFilters[filterType].push(id)
       }
-      return applicationIds
+
+      this.updateFilteredApplications()
     },
 
-    getApplicationsByAlgorithms(id?: number) {
-      if (id) this.toggleApplicationFilters("algorithm", id)
-      const { algorithmIds } = this.applicationFilters
-      if (algorithmIds.length == 0) return this.applications
-      const applicationsByAlgorithms = this.applications.filter(e => {() => {
-        this.getApplicationIdsbyFilter(
-          algorithmIds,
-          "algorithm",
-          this.application_algorithms
-        ).includes(e.id)
-      }})
-      this.applicationsByFilters.push(applicationsByAlgorithms)
-    },
+    // UPDATE FILTERED APPLICATIONS
+    updateFilteredApplications() {
+      let applications = this.applications
+      const filters = this.activeApplicationFilters      
+      const relations = this.applicationRelations
 
-    getApplicationsByAlgorithmTypes(id?: number) {
-      const algorithmStore = useAlgorithmStore()
-      if (id) this.toggleApplicationFilters("algorithm", id)
-      const { algorithmTypeIds } = this.applicationFilters
-      if (algorithmTypeIds.length == 0) return this.applications
-      const algorithmIds = algorithmStore.getAlgorithmsByAlgorithmTypes().map(e => e.id)
-      const applicationsByAlgorithmTypes = this.applications.filter(e => {() => {
-        this.getApplicationIdsbyFilter(
-          algorithmIds,
-          "algorithm",
-          this.application_algorithms
-        ).includes(e.id)
-      }})
-      this.applicationsByFilters.push(applicationsByAlgorithmTypes)
-    },
+      for (const type in filters) {
+        const filterIds = filters[type as Subtopic]
+        const relationIds = relations[type as Subtopic]
 
-    getApplicationsByDataStructures(id?: number) {
-      if (id) this.toggleApplicationFilters("dataStructure", id)
-      const { dataStructureIds } = this.applicationFilters
-      const applicationsByDataStructures = this.applications.filter(application => {() => {
-        let applicationIds = []
-        for (const application_dataStructures of this.application_dataStructures) {
-          if (dataStructureIds.includes(application_dataStructures.dataStructureId)) {
-            applicationIds.push(application_dataStructures.applicationId)
-          }
-        }
-        return applicationIds.includes(application.id)
-      }})
-      this.applicationsByFilters.push(applicationsByDataStructures)
-    },
+        if (filterIds.length == 0) continue
 
-    getApplicationsByDataTypes(id?: number) {
-      if (id) this.toggleApplicationFilters("dataType", id)
-      const { dataTypeIds } = this.applicationFilters
-      const applicationsByDataTypes = this.applications.filter(application => {() => {
-        let applicationIds = []
-        for (const application_dataType of this.application_dataTypes) {
-          if (dataTypeIds.includes(application_dataType.dataTypeId)) {
-            applicationIds.push(application_dataType.applicationId)
-          }
-        }
-        return applicationIds.includes(application.id)
-      }})
-      this.applicationsByFilters.push(applicationsByDataTypes)
-    },
-
-    getApplicationsByFilters() {
-      const filteredApplications = this.applications.filter(application => {
-        for (const applicationsByFilter of this.applicationsByFilters) {
-          if (!applicationsByFilter.includes(application)) return false
-        }
-        return true
-      })
-      this.filteredApplications = filteredApplications
-      return this.filteredApplications
+        const filteredRelationIds = relationIds.filter(e => {
+          filterIds.includes(e[`${type}Id`])
+        })
+        const filteredApplicationIds = filteredRelationIds.map(e => e.applicationId)
+        applications = applications.filter(e => {
+          filteredApplicationIds.includes(e.id)
+        })
+      }
+      this.filteredApplications = applications
     }
   }
+
 })
