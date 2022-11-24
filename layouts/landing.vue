@@ -6,10 +6,10 @@ const config = useRuntimeConfig()
 const storageUrl = config.storageUrl
 
 const globalStore = useGlobalStore()
-const { darkMode } = storeToRefs(globalStore)
+const { isDarkMode } = storeToRefs(globalStore)
 
 const mode = computed(() => {
-  if (darkMode.value) return "Dark"
+  if (isDarkMode.value) return "Dark"
   return "Light"
 })
 </script>

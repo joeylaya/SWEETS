@@ -117,6 +117,20 @@ export interface Database {
           applicationId?: number
         }
       }
+      Application_AlgorithmType: {
+        Row: {
+          algorithmTypeId: number
+          applicationId: number
+        }
+        Insert: {
+          algorithmTypeId: number
+          applicationId: number
+        }
+        Update: {
+          algorithmTypeId?: number
+          applicationId?: number
+        }
+      }
       Application_DataStructure: {
         Row: {
           applicationId: number
