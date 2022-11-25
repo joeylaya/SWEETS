@@ -14,8 +14,14 @@ export type DataType_Method = Database["public"]["Tables"]["DataType_Method"]["R
 export type Method = Database["public"]["Tables"]["Method"]["Row"]
 export type Term = Database["public"]["Tables"]["Term"]["Row"]
 export type Topic = Database["public"]["Tables"]["Topic"]["Row"]
-
 export type Subtopic = "algorithm" | "algorithmType" | "application"
+
+export interface ApplicationWithRelations extends Application {
+  relations: {
+    algorithm: Array<Algorithm>,
+    algorithmType: Array<AlgorithmType>
+  }
+}
 
 export const Relations: Record<Subtopic, Array<Record<string, number>>> = {
   "algorithm": Array<Record<string, number>>(),
