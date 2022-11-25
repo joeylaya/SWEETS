@@ -5,7 +5,7 @@ const props = defineProps(['id', 'name', 'url', 'slug', 'priority'])
 <template>
   <section>
     <header>
-      <h3>{{ name }}</h3>
+      <h3>{{ id }}. {{ name }}</h3>
     </header>
     <div>
       

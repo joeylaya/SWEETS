@@ -17,16 +17,16 @@ export type Topic = Database["public"]["Tables"]["Topic"]["Row"]
 
 export type Subtopic = "algorithm" | "algorithmType" | "application"
 
-export const Relations = {
+export const Relations: Record<Subtopic, Array<Record<string, number>>> = {
   "algorithm": Array<Record<string, number>>(),
   "algorithmType": Array<Record<string, number>>(),
   "application": Array<Record<string, number>>()
 }
 
-export const Filters = {
-  "algorithm": Array<number>(),
-  "algorithmType": Array<number>(),
-  "application": Array<number>()
+export const Filters: Record<Subtopic, Array<number>> = {
+  "algorithm": [],
+  "algorithmType": [],
+  "application": []
 }
 
 export const FilterOptions = {
@@ -34,26 +34,5 @@ export const FilterOptions = {
   "algorithmType": Array<Record<"id" | "name", number | string>>(),
   "application": Array<Record<"id" | "name", number | string>>()  
 }
-// export type ApplicationComposite = Application_Algorithm | Application_DataStructure | Application_DataType
-
-// export type Filters = {
-//   algorithmIds: Array<number>
-//   algorithmTypeIds: Array<number>
-//   applicationIds: Array<number>
-//   dataStructureIds: Array<number>
-//   dataTypeIds: Array<number>
-// }
-
-// export type FilterType =
-//   "algorithm" |
-//   "algorithmType" |
-//   "application" |
-//   "dataStructure" |
-//   "dataType"
-
-// export type FilterOption = {
-//   type: FilterType,
-//   options: Array<Record<'id' | 'name', number | string>>
-// }
 
 export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'

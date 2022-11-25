@@ -1,7 +1,10 @@
-<script setup>
+<script setup lang="ts">
+import { supabase } from './supabase';
 import { useGlobalStore } from './stores/globalStore';
 import { useAlgorithmStore } from './stores/algorithmStore';
 import { useApplicationStore } from './stores/applicationStore';
+import { storeToRefs } from 'pinia';
+import { Topic, Application, Application_Algorithm, Application_AlgorithmType, Algorithm, AlgorithmType, Algorithm_AlgorithmType} from './types';
 
 useHead({
   link: [
@@ -16,57 +19,37 @@ useHead({
 const globalStore = useGlobalStore()
 const applicationStore = useApplicationStore()
 const algorithmStore = useAlgorithmStore()
-const route = useRoute()
-const seconds = new Date().getUTCSeconds()
-const key = route.path + seconds
+const { topics, isDarkMode } = storeToRefs(globalStore)
+const { applications, applicationRelations } = storeToRefs(applicationStore)
+const { algorithms, algorithmTypes, algorithmRelations } = storeToRefs(algorithmStore)
 
-// Global data
-const { data: topics } = useLazyAsyncData(
-  `api/Topic/${key}`, () => $fetch('/api/Topic')
-)
-watch(
-  [topics],
-  ([newTopics]) => {
-    globalStore.topics = newTopics
-  }
-)
+// Fetch global data
+const { data: topicData } = await supabase.from('Topic').select('*')
+topics.value = topicData as Array<Topic>
 
-// Application data
-const { data: applications } = useLazyAsyncData(
-  `api/Application/${key}`, () => $fetch('/api/Application')
-)
-const { data: application_algorithms } = useLazyAsyncData(
-  `api/Application_Algorithm/${key}`, () => $fetch('/api/Application_Algorithm')
-)
-const { data: application_algorithmTypes } = useLazyAsyncData(
-  `api/Application_AlgorithmType/${key}`, () => $fetch('/api/Application_AlgorithmType')
-)
-watch(
-  [applications, application_algorithms, application_algorithmTypes],
-  ([newApplications, newApplication_algorithms, newApplication_algorithmTypes]) => {
-  applicationStore.applications = newApplications
-  applicationStore.applicationRelations.algorithm = newApplication_algorithms
-  applicationStore.applicationRelations.algorithmType = newApplication_algorithmTypes
-})
+// Fetch application data
+const { data: applicationData } = await supabase.from('Application').select('*')
+const { data: application_algorithmData } = await supabase.from('Application_Algorithm').select('*')
+const { data: application_algorithmTypeData } = await supabase.from('Application_AlgorithmType').select('*')
+applications.value = applicationData as Array<Application>
+applicationRelations.value = {
+  algorithm: application_algorithmData as Array<Application_Algorithm>,
+  algorithmType: application_algorithmTypeData as Array<Application_AlgorithmType>,
+  application: []
+}
+applicationStore.updateFilteredApplications()
 
-// Algorithm data
-const { data: algorithms } = useLazyAsyncData(
-  `api/Algorithm/${key}`, () => $fetch('/api/Algorithm')
-)
-const { data: algorithmTypes } = useLazyAsyncData(
-  `api/AlgorithmType/${key}`, () => $fetch('/api/AlgorithmType')
-)
-const { data: algorithm_algorithmTypes } = useLazyAsyncData(
-  `api/Algorithm_AlgorithmType/${key}`, () => $fetch('/api/Algorithm_AlgorithmType')
-)
-watch(
-  [algorithms, algorithmTypes, algorithm_algorithmTypes],
-  ([newAlgorithms, newAlgorithmTypes, newAlgorithm_algorithmTypes]) => {
-    algorithmStore.algorithms = newAlgorithms
-    algorithmStore.algorithmTypes = newAlgorithmTypes
-    algorithmStore.algorithmRelations.algorithmType = newAlgorithm_algorithmTypes
-  }
-)
+// Fetch algorithm data
+const { data: algorithmData } = await supabase.from('Algorithm').select('*')
+const { data: algorithmTypeData } = await supabase.from('AlgorithmType').select('*')
+const { data: algorithm_algorithmTypeData } = await supabase.from('Algorithm_AlgorithmType').select('*')
+algorithms.value = algorithmData as Array<Algorithm>
+algorithmTypes.value = algorithmTypeData as Array<AlgorithmType>
+algorithmRelations.value = {
+  algorithm: [],
+  algorithmType: algorithm_algorithmTypeData as Array<Algorithm_AlgorithmType>,
+  application: []
+}
 
 // Add screen resize listener
 const resizeListener = (event) => globalStore.updateScreenSize(event.target.innerWidth)
@@ -77,20 +60,17 @@ onBeforeMount(() => {
 onBeforeUnmount(() => window.removeEventListener('resize', resizeListener))
 
 // Get layout type
+const route = useRoute()
 const layout = computed(() => {
   if (route.path == '/') return 'landing'
   return 'default'
 })
-
 </script>
 
 <template>
   <div
-    class="
-      -m-2 min-w-screen min-h-screen
-      font-body text-neutral-600 bg-neutral-50
-      dark:(text-neutral-100 bg-neutral-900)
-    "
+    class="w-screen h-screen font-body"
+    :class="isDarkMode ? 'dark text-neutral-100 bg-neutral-900' : 'text-neutral-600 bg-neutral-50'"
   >
     <NuxtLayout :name="layout">
       <NuxtPage />
