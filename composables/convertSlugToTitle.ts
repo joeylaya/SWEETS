@@ -1,4 +1,5 @@
 export const convertSlugToTitle = (slug: string) => {
+  slug = slug.replace(/([A-Z])/g, "-$1")
   let words = slug.split('-')
   
   for (let i = 0; i < words.length; i++) {

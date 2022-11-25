@@ -24,7 +24,7 @@ const { topics } = storeToRefs(globalStore)
     </div>
   </nav>
   <div class="m-4 flex justify-end sm:(hidden)">
-    <!-- <DarkModeToggleButton />     -->
+    <DarkModeButton />
   </div>
 </div>
 </template>

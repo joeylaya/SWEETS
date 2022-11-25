@@ -1,5 +1,6 @@
 <script setup>
 import { useApplicationStore } from '~~/stores/applicationStore';
+import { convertSlugToTitle } from '~~/composables/convertSlugToTitle';
 
 // Props
 const props = defineProps(['filters', 'type'])
@@ -18,17 +19,19 @@ const config = useRuntimeConfig()
 const storageUrl = config.storageUrl
 
 // Get title from type
-const title = convertSlugToTitle(props.type)
+const title = computed(() => {
+  return convertSlugToTitle(props.type)
+}) 
 
 </script>
 
 <template>
   <section
-    class="max-w-78 p-4 rounded-xl flex flex-col gap-4"
-    :class="expanded ? 'bg-white' : ''"
+    class="relative max-w-78 flex flex-col z-5"
   >
     <header
-      class="h-4 flex gap-2 place-items-center"
+      class="h-12 px-4 flex gap-2 justify-between place-items-center rounded-t-xl"
+      :class="expanded ? 'bg-white w-58' : ''"
     >
       <h4
         class="font-header font-semibold"
@@ -49,13 +52,13 @@ const title = convertSlugToTitle(props.type)
     </header>
     <div
       v-if="expanded"
-      class="flex flex-wrap gap-2"
+      class="absolute top-full flex flex-wrap gap-2 bg-white w-full rounded-b-xl px-4 pb-4"
     >
       <div
         v-for="filter in filters"
         :key="filter.id"
       >
-        <ApplicationFilterButton :="filter" :type="type" />
+        <ApplicationFilterButton :id="filter.id" :name="filter.name" :type="type" />
       </div>
     </div>
   </section>

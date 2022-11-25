@@ -27,7 +27,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      storageUrl: process.env.STORAGE_URL
+      storageUrl: process.env.STORAGE_URL,
+      supabaseKey: process.env.SUPABASE_KEY
     }
   }
 })

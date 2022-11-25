@@ -1,4 +1,6 @@
 <script setup>
+import { convertSlugToTitle } from '~~/composables/convertSlugToTitle';
+
 // Get storage URL
 const config = useRuntimeConfig()
 const storageUrl = config.storageUrl
@@ -11,7 +13,7 @@ const title = computed(() => {
 </script>
 
 <template>
-  <header class="w-full h-24 sm:(h-32) flex gap-8 justify-start place-items-center">
+  <header class="w-full h-12 sm:(h-24) flex gap-8 justify-start place-items-center">
     <NuxtLink to="/">
       <button class="flex gap-2 place-items-center bg-neutral-200 dark:bg-neutral-600 hover:bg-primary-100 p-2 rounded-lg">
         <div class="w-4 h-4">
