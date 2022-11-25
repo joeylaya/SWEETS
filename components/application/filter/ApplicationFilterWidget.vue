@@ -22,7 +22,7 @@ const filterOptions = reactive({
 
 // Reset filters
 const resetFilters = () => {
-  applicationStore.activeApplicationFilters = Filters
+  applicationStore.activeApplicationFilters = structuredClone(Filters)
   applicationStore.expandedApplicationFilterType = String() as Subtopic
   applicationStore.updateFilteredApplications()
 }

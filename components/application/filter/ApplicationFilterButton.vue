@@ -27,6 +27,6 @@ const selected = computed(() => {
     :class="selected ? 'bg-primary-200 text-primary-500' : ''"
     @click="toggleApplicationFilters"
   >
-    <h5 class="font-header font-medium text-sm">{{id}}. {{name}}</h5>
+    <h5 class="font-header font-medium text-sm">{{name}}</h5>
   </button>
 </template>
