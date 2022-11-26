@@ -69,7 +69,7 @@ const layout = computed(() => {
 
 <template>
   <div
-    class="w-screen max-w-screen h-auto min-h-screen font-body"
+    class="w-screen max-w-screen min-h-screen font-body"
     :class="isDarkMode ? 'dark text-neutral-100 bg-neutral-900' : 'text-neutral-600 bg-neutral-50'"
   >
     <NuxtLayout :name="layout">

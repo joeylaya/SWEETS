@@ -7,5 +7,7 @@ export const convertSlugToTitle = (slug: string) => {
     words[i] = word.charAt(0).toUpperCase() + word.slice(1)
   }
 
-  return words.join(' ')
+  let title = words.join(' ')
+  if (title.charAt(-1) == '/') title = title.slice(0,-1)
+  return title
 }

@@ -29,5 +29,8 @@ export default defineNuxtConfig({
     public: {
       storageUrl: process.env.STORAGE_URL
     }
-  }
+  },
+  css: [
+    '@/assets/app.css'
+  ]
 })

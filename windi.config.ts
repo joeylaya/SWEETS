@@ -25,6 +25,9 @@ export default defineConfig({
         header: ["Rubik", "Arial", "sans-serif"],
         body: ["Questrial", "Arial", "sans-serif"]
       },
+      fontSize: {
+        DEFAULT: '1rem'
+      },
       colors: {
         primary: colors.violet,
         secondary: colors.amber
