@@ -15,7 +15,7 @@ const mode = computed(() => {
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col">
+  <div class="w-full h-screen flex flex-col justify-self-center outline">
     <div class="p-4 flex justify-end">
       <DarkModeButton />
     </div>

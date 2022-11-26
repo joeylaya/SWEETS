@@ -21,10 +21,10 @@ const selected = computed(() => {
   <button
     class="
       px-2 py-1 rounded-lg
-      bg-neutral-200 dark:(bg-neutral-600)
-      hover:()
+      bg-neutral-200 dark:(bg-neutral-500 hover:shadow-lg)
+      hover:(shadow-sm)
     "
-    :class="selected ? 'bg-primary-200 text-primary-500' : ''"
+    :class="selected ? 'bg-primary-200 text-primary-500' : 'dark:(text-white)'"
     @click="toggleApplicationFilters"
   >
     <h5 class="font-header font-medium text-sm">{{name}}</h5>

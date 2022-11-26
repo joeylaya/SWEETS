@@ -31,11 +31,11 @@ const title = computed(() => {
   >
     <header
       class="h-12 px-4 flex gap-2 justify-between place-items-center rounded-t-xl z-5"
-      :class="expanded ? 'bg-white w-58' : ''"
+      :class="expanded ? 'bg-white dark:(bg-neutral-600) w-58' : ''"
     >
       <h4
         class="font-header font-semibold"
-        :class="expanded ? 'text-primary-500' : ''"
+        :class="expanded ? 'text-primary-500 dark:(text-neutral-900)' : ''"
       >
         {{ title }}
       </h4>
@@ -52,7 +52,7 @@ const title = computed(() => {
     </header>
     <div
       v-if="expanded"
-      class="absolute top-full flex flex-wrap gap-2 bg-white w-full rounded-b-xl px-4 pb-4 shadow-2xl z-4"
+      class="absolute top-full flex flex-wrap gap-2 bg-white dark:(bg-neutral-600) w-full rounded-b-xl px-4 pb-4 shadow-2xl z-4"
     >
       <div
         v-for="filter in filters"

@@ -5,7 +5,6 @@ import { useApplicationStore } from '~~/stores/applicationStore';
 // Get applications
 const applicationStore = useApplicationStore()
 const { filteredApplications, applicationRelations } = storeToRefs(applicationStore)
-console.log(applicationRelations.value)
 </script>
 
 <template>

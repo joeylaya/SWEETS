@@ -13,6 +13,7 @@ export const useApplicationStore = defineStore('application', {
   state: () => ({
     applications: Array<Object>() as Array<Application>,
     applicationRelations: Relations,
+    expandedApplication: Number(),
     expandedApplicationFilterType: String() as Subtopic,
     activeApplicationFilters: Filters,
     filteredApplications: Array<Object>() as Array<Application>,    
@@ -20,6 +21,14 @@ export const useApplicationStore = defineStore('application', {
 
   actions: {
     // TOGGLE FILTERS
+    toggleApplication(id: number) {
+      if (this.expandedApplication == id) {
+        this.expandedApplication = 0
+      } else {
+        this.expandedApplication = id
+      }
+    },
+
     toggleApplicationFilterType(filterType: Subtopic) {
       if (this.expandedApplicationFilterType == filterType) {
         this.expandedApplicationFilterType = String() as Subtopic
@@ -47,7 +56,7 @@ export const useApplicationStore = defineStore('application', {
       let applications = this.applications
       const filters = this.activeApplicationFilters      
       const relations = this.applicationRelations
-      console.log(relations)
+
       for (const type in filters) {
         const filterIds = filters[type as Subtopic]
         const relationIds = relations[type as Subtopic]
@@ -109,7 +118,7 @@ export const useApplicationStore = defineStore('application', {
 
         applicationsWithRelations.push({ ...application, relations: applicationRelations })
       }
-      console.log(applicationsWithRelations)
+
       this.filteredApplications = applicationsWithRelations
     }
   }
