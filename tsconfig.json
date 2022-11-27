@@ -2,7 +2,9 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "types": [
-      "nuxt-windicss"
+      "nuxt-windicss",
+      "@nuxt/types",
+      "@nuxt/content"
     ]
   }
 }

@@ -16,6 +16,7 @@ const { expandedApplication } = storeToRefs(applicationStore)
 const expanded = computed(() => {
   return expandedApplication.value == props.id
 })
+
 const content = ref()
 const toggleApplication = async () => {
   if (!expanded.value) {
