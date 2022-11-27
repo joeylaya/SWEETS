@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { useApplicationStore } from '~~/stores/applicationStore';
 import { useAlgorithmStore } from '~~/stores/algorithmStore';
-import { Filters, Subtopic } from '~~/types';
+import { useDataStructureStore } from '~~/stores/dataStructureStore';
+import { usePythonStore } from '~~/stores/pythonStore';
+import { ApplicationFilters, Subtopic } from '~~/types';
 import { storeToRefs } from 'pinia';
 
 // Get data
 const applicationStore = useApplicationStore()
 const algorithmStore = useAlgorithmStore()
-const { applications } = storeToRefs(applicationStore)
+const dataStructureStore = useDataStructureStore()
+const pythonStore = usePythonStore()
 const { algorithms, algorithmTypes } = storeToRefs(algorithmStore)
+const { dataStructures } = storeToRefs(dataStructureStore)
+const { dataTypes } = storeToRefs(pythonStore)
 
 // Define filter options
 const filterOptions = reactive({
@@ -17,14 +22,18 @@ const filterOptions = reactive({
   }),
   algorithmType: algorithmTypes.value.map(e => {
     return {id: e.id, name: e.name!}
-  })
+  }),
+  dataStructure: dataStructures.value.map(e => {
+    return {id: e.id, name: e.name!}
+  }),
+  dataType: dataTypes.value.map(e => {
+    return {id: e.id, name: e.name!}
+  }),
 })
 
 // Reset filters
 const resetFilters = () => {
-  applicationStore.activeApplicationFilters = structuredClone(Filters)
-  applicationStore.expandedApplicationFilterType = String() as Subtopic
-  applicationStore.updateFilteredApplications()
+  applicationStore.resetFilters()
 }
 </script>
 

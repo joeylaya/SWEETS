@@ -1,9 +1,16 @@
-<script setup>
+<script setup lang="ts">
+import { useApplicationStore } from '~~/stores/applicationStore';
 const props = defineProps(['relationType', 'type'])
 
 const title = computed(() => {
   return convertSlugToTitle(props.type)
 })
+
+const applicationStore = useApplicationStore()
+const filterByTag = (id: number) => {
+  applicationStore.resetFilters()
+  applicationStore.toggleApplicationFilters(props.type, id)
+}
 </script>
 
 <template>
@@ -16,9 +23,12 @@ const title = computed(() => {
         v-for="relation in relationType"
         :key="relation.id"
       >
-        <div class="bg-primary-200 px-2 rounded-full dark:(bg-primary-300)">
+        <button
+          class="bg-primary-200 px-2 rounded-full dark:(bg-primary-300)"
+          @click="filterByTag(relation.id)"
+        >
           <p class="font-header font-semibold text-xs text-primary-500 dark:(text-primary-600)">{{ relation.name }}</p>
-        </div>
+        </button>
       </div>
     </div>
   </section>

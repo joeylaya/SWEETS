@@ -19,11 +19,9 @@ const expanded = computed(() => {
 const content = ref()
 const toggleApplication = async () => {
   if (!expanded.value) {
-    console.log('if')
     content.value = await queryContent('application').where({
         _path: `/application/${props.slug}`
       }).findOne()
-    console.log(content.value)
   }
   applicationStore.toggleApplication(props.id)
 }

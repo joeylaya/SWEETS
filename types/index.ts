@@ -14,31 +14,34 @@ export type DataType_Method = Database["public"]["Tables"]["DataType_Method"]["R
 export type Method = Database["public"]["Tables"]["Method"]["Row"]
 export type Term = Database["public"]["Tables"]["Term"]["Row"]
 export type Topic = Database["public"]["Tables"]["Topic"]["Row"]
-export type Subtopic = "algorithm" | "algorithmType" | "application"
+export type Subtopic = "algorithm" | "algorithmType" | "dataStructure" | "dataType" | "method" | "application"
 
-export interface ApplicationWithRelations extends Application {
-  relations: {
-    algorithm: Array<Algorithm>,
-    algorithmType: Array<AlgorithmType>
-  }
+export type ApplicationRelatedDataSubtopic = "algorithm" | "algorithmType" | "dataStructure" | "dataType"
+export type RelatedData = Partial<Record<Subtopic, Array<Algorithm | AlgorithmType | DataStructure | DataType>>>
+export interface ApplicationWithRelatedData extends Application {
+  relations: RelatedData
 }
 
-export const Relations: Record<Subtopic, Array<Record<string, number>>> = {
+export const Relations: Partial<Record<Subtopic, Array<Record<string, number>>>> = {
   "algorithm": Array<Record<string, number>>(),
   "algorithmType": Array<Record<string, number>>(),
-  "application": Array<Record<string, number>>()
+  "dataStructure": Array<Record<string, number>>(),
+  "dataType": Array<Record<string, number>>(),
+  "method": Array<Record<string, number>>(), 
 }
 
-export const Filters: Record<Subtopic, Array<number>> = {
+export const ApplicationFilters: Partial<Record<ApplicationRelatedDataSubtopic, Array<number>>> = {
   "algorithm": [],
   "algorithmType": [],
-  "application": []
+  "dataStructure": [],
+  "dataType": []
 }
 
 export const FilterOptions = {
   "algorithm": Array<Record<"id" | "name", number | string>>(),
   "algorithmType": Array<Record<"id" | "name", number | string>>(),
-  "application": Array<Record<"id" | "name", number | string>>()  
+  "dataStructure": Array<Record<"id" | "name", number | string>>(),
+  "dataType": Array<Record<"id" | "name", number | string>>(),
 }
 
 export type ScreenSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'

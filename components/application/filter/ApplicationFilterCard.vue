@@ -10,8 +10,13 @@ const applicationStore = useApplicationStore()
 const toggleApplicationFilterType = () => {
   applicationStore.toggleApplicationFilterType(props.type)
 }
+
 const expanded = computed(() => {
   return applicationStore.expandedApplicationFilterType == props.type
+})
+
+const filterCount = computed(() => {
+  return applicationStore.activeApplicationFilters[props.type].length
 })
 
 // Get storage URL
@@ -21,8 +26,7 @@ const storageUrl = config.storageUrl
 // Get title from type
 const title = computed(() => {
   return convertSlugToTitle(props.type)
-}) 
-
+})
 </script>
 
 <template>
@@ -30,9 +34,12 @@ const title = computed(() => {
     class="relative max-w-78 flex flex-col"
   >
     <header
-      class="h-12 px-4 flex gap-2 justify-between place-items-center rounded-t-xl z-5"
+      class="relative h-12 px-4 flex gap-2 justify-between place-items-center rounded-t-xl z-5"
       :class="expanded ? 'bg-white dark:(bg-neutral-600) w-58' : ''"
     >
+      <div v-if="filterCount > 0" class="absolute top-2 left-1 bg-primary-200/60 rounded-full w-4 h-4 flex flex-none justify-center place-items-center">
+        <p class="font-header text-xs text-primary-500 font-bold">{{filterCount}}</p>
+      </div>
       <h4
         class="font-header font-semibold"
         :class="expanded ? 'text-primary-500 dark:(text-neutral-900)' : ''"

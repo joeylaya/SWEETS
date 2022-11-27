@@ -4,7 +4,7 @@ import { useGlobalStore } from './stores/globalStore';
 import { useAlgorithmStore } from './stores/algorithmStore';
 import { useApplicationStore } from './stores/applicationStore';
 import { storeToRefs } from 'pinia';
-import { Topic, Application, Application_Algorithm, Application_AlgorithmType, Algorithm, AlgorithmType, Algorithm_AlgorithmType} from './types';
+import { Topic, Application, Application_Algorithm, Application_AlgorithmType, Algorithm, AlgorithmType, Algorithm_AlgorithmType, DataStructure, DataType, Method, DataType_Method, Application_DataStructure, Application_DataType} from './types';
 
 useHead({
   link: [
@@ -19,9 +19,13 @@ useHead({
 const globalStore = useGlobalStore()
 const applicationStore = useApplicationStore()
 const algorithmStore = useAlgorithmStore()
+const dataStructureStore = useDataStructureStore()
+const pythonStore = usePythonStore()
 const { topics, isDarkMode } = storeToRefs(globalStore)
 const { applications, applicationRelations } = storeToRefs(applicationStore)
 const { algorithms, algorithmTypes, algorithmRelations } = storeToRefs(algorithmStore)
+const { dataStructures } = storeToRefs(dataStructureStore)
+const { dataTypes, methods, dataTypeRelations } = storeToRefs(pythonStore)
 
 // Fetch global data
 const { data: topicData } = await supabase.from('Topic').select('*')
@@ -31,11 +35,14 @@ topics.value = topicData as Array<Topic>
 const { data: applicationData } = await supabase.from('Application').select('*')
 const { data: application_algorithmData } = await supabase.from('Application_Algorithm').select('*')
 const { data: application_algorithmTypeData } = await supabase.from('Application_AlgorithmType').select('*')
+const { data: application_dataStructureData } = await supabase.from('Application_DataStructure').select('*')
+const { data: application_dataTypeData } = await supabase.from('Application_DataType').select('*')
 applications.value = applicationData as Array<Application>
 applicationRelations.value = {
   algorithm: application_algorithmData as Array<Application_Algorithm>,
   algorithmType: application_algorithmTypeData as Array<Application_AlgorithmType>,
-  application: []
+  dataStructure: application_dataStructureData as Array<Application_DataStructure>,
+  dataType: application_dataTypeData as Array<Application_DataType>,
 }
 applicationStore.updateFilteredApplications()
 
@@ -46,9 +53,21 @@ const { data: algorithm_algorithmTypeData } = await supabase.from('Algorithm_Alg
 algorithms.value = algorithmData as Array<Algorithm>
 algorithmTypes.value = algorithmTypeData as Array<AlgorithmType>
 algorithmRelations.value = {
-  algorithm: [],
-  algorithmType: algorithm_algorithmTypeData as Array<Algorithm_AlgorithmType>,
-  application: []
+  algorithmType: algorithm_algorithmTypeData as Array<Algorithm_AlgorithmType>
+}
+
+// Fetch data structure data
+const { data: dataStructureData } = await supabase.from('DataStructure').select('*')
+dataStructures.value = dataStructureData as Array<DataStructure>
+
+// Fetch python data
+const { data: dataTypeData } = await supabase.from('DataType').select('*')
+const { data: methodData } = await supabase.from('Method').select('*')
+const { data: dataType_methodData } = await supabase.from('DataType_Method').select('*')
+dataTypes.value = dataTypeData as Array<DataType>
+methods.value = methodData as Array<Method>
+dataTypeRelations.value = {
+  method: dataType_methodData as Array<DataType_Method>
 }
 
 // Add screen resize listener

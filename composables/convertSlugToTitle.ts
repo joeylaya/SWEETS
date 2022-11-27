@@ -8,6 +8,6 @@ export const convertSlugToTitle = (slug: string) => {
   }
 
   let title = words.join(' ')
-  if (title.charAt(-1) == '/') title = title.slice(0,-1)
+  if (title.slice(-1) == '/') title = title.slice(0,-1)
   return title
 }

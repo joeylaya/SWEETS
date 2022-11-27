@@ -4,7 +4,7 @@ import { useApplicationStore } from '~~/stores/applicationStore';
 
 // Get applications
 const applicationStore = useApplicationStore()
-const { filteredApplications, applicationRelations } = storeToRefs(applicationStore)
+const { filteredApplications } = storeToRefs(applicationStore)
 </script>
 
 <template>
