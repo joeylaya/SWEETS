@@ -10,8 +10,9 @@ const { isNavExpanded } = storeToRefs(globalStore)
 <template>
 <section
   class="
-    fixed w-full 
+    fixed w-full h-16 
     flex justify-center place-items-center
+    backdrop-filter backdrop-blur-md
   "
 >
   <NavLogo />

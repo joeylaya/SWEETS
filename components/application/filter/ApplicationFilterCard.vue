@@ -34,14 +34,14 @@ const title = computed(() => {
     class="relative max-w-78 flex flex-col"
   >
     <header
-      class="relative h-12 px-4 flex gap-2 justify-between place-items-center rounded-t-xl z-5"
-      :class="expanded ? 'bg-white dark:(bg-neutral-600) w-58' : ''"
+      class="relative h-6 px-4 py-4 sm:(h-8 py-6) flex gap-2 justify-between place-items-center rounded-t-xl"
+      :class="expanded ? 'bg-white dark:(bg-neutral-600) w-58 z-5' : 'z-3'"
     >
-      <div v-if="filterCount > 0" class="absolute top-2 left-1 bg-primary-200/60 rounded-full w-4 h-4 flex flex-none justify-center place-items-center">
+      <div v-if="filterCount > 0 && !expanded" class="absolute top-0 left-1 sm:(top-2) bg-primary-200 rounded-full w-4 h-4 flex flex-none justify-center place-items-center">
         <p class="font-header text-xs text-primary-500 font-bold">{{filterCount}}</p>
       </div>
       <h4
-        class="font-header font-semibold"
+        class="text-sm sm:(text-md) font-header font-semibold"
         :class="expanded ? 'text-primary-500 dark:(text-neutral-900)' : ''"
       >
         {{ title }}

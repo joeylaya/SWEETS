@@ -19,7 +19,7 @@ const mode = computed(() => {
     <div class="p-4 flex justify-end">
       <DarkModeButton />
     </div>
-    <main class="w-full h-full">
+    <main class="w-full h-full p-8">
       <slot />
     </main>
   </div>

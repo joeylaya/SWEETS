@@ -11,7 +11,7 @@
   "devDependencies": {
     "@nuxtjs/supabase": "^0.2.5",
     "@vue/test-utils": "^2.2.4",
-    "nuxt": "3.0.0",
+    "nuxt": "npm:nuxt3@latest",
     "nuxt-windicss": "^2.5.5",
     "supabase": "^1.15.0",
     "vitest": "^0.25.3",

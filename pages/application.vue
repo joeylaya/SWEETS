@@ -14,7 +14,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="flex flex-col gap-8"
+    class="flex flex-col gap-4"
   >
     <ApplicationFilterWidget />
     <ApplicationDisplayWidget />

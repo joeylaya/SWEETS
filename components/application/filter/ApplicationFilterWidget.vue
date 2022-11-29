@@ -38,20 +38,18 @@ const resetFilters = () => {
 </script>
 
 <template>
-  <div>
-    <section class="flex gap-4 place-items-start">
-      <div
-        v-for="filterOption, filterType in filterOptions"
-        :key="filterType"
-      >
-        <ApplicationFilterCard :filters="filterOption" :type="filterType" />
-      </div>
-      <button
-        class="h-12"
-        @click="resetFilters"
-      >
-        <h4 class="text-sm uppercase">Reset Filters</h4>
-      </button>
-    </section>    
-  </div>
+  <section class="relative flex flex-wrap gap-x-4 gap-y-2 place-items-start pb-8 sm:(pb-0)">
+    <div
+      v-for="filterOption, filterType in filterOptions"
+      :key="filterType"
+    >
+      <ApplicationFilterCard :filters="filterOption" :type="filterType" />
+    </div>
+    <button
+      class="absolute bottom-0 h-6 px-4 py-4 sm:(relative h-8 py-6) flex place-items-center"
+      @click="resetFilters"
+    >
+      <h4 class="text-xs sm:text-sm uppercase">Reset Filters</h4>
+    </button>
+  </section>
 </template>

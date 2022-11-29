@@ -47,7 +47,7 @@ const toggleApplication = async () => {
           alt=""
       />      
     </button>
-    <div class="p-6 flex flex-col">
+    <div class="p-6 flex flex-col gap-2">
       <header class="text-left flex gap-2 place-items-start">
         <a :href="url" target="_blank">
           <button class="w-6 h-6 p-1 m-1 flex-none justify-center place-items-center rounded-lg bg-primary-200 dark:bg-neutral-500">
@@ -60,9 +60,9 @@ const toggleApplication = async () => {
         </a>        
         <h2 class="font-header font-semibold text-2xl sm:(text-3xl) text-primary-400">{{ name }}</h2>
       </header>
+      <ContentRenderer v-if="expanded" :value="content" />
       <div
-        class="py-2 flex gap-3"
-        :class="expanded ? 'flex-row' : 'flex-col'"
+        class="py-2 flex flex-wrap gap-y-2 gap-x-4"
       >
         <div
           v-for="(relationType, type) in relations"
@@ -71,9 +71,6 @@ const toggleApplication = async () => {
           <ApplicationDisplayRelation :relationType="relationType" :type="type" />
         </div>
       </div>
- 
-      <ContentRenderer v-if="expanded" :value="content" />
-    
     </div>
     <button
       v-if="!expanded"

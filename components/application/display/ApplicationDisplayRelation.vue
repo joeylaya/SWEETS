@@ -14,7 +14,7 @@ const filterByTag = (id: number) => {
 </script>
 
 <template>
-  <section class="flex flex-col gap-1 place-items-start">
+  <section class="flex flex-col place-items-start">
     <header>
       <h5 class="font-header font-medium tracking-wide text-xs text-neutral-400">{{ title }}</h5>
     </header>
@@ -27,7 +27,7 @@ const filterByTag = (id: number) => {
           class="bg-primary-200 px-2 rounded-full dark:(bg-primary-300)"
           @click="filterByTag(relation.id)"
         >
-          <p class="font-header font-semibold text-xs text-primary-500 dark:(text-primary-600)">{{ relation.name }}</p>
+          <p class="font-header font-semibold text-xs py-1 leading-none text-primary-500 dark:(text-primary-600)">{{ relation.name }}</p>
         </button>
       </div>
     </div>
